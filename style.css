@@ -1,0 +1,90 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: Verdana, sans-serif;
+}
+
+body {
+  background-color: #333333;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  margin-top: 10rem;
+  margin-bottom: 10rem;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: #ffffff;
+  width: 30em;
+  max-width: 37.5em;
+  padding: 3em 3em;
+  position: center;
+  border-color: #f28c28;
+  border-style: solid;
+  border-width: 4px 4px 4px 4px;
+  border-radius: 0.7rem;
+  box-shadow: 0 1.25em 1.8em rgba(227, 72, 10, 0.25);
+}
+
+.search {
+  display: grid;
+  grid-template-columns: 9fr 3fr;
+  gap: 1.3em;
+}
+
+.search button {
+  font-size: 1em;
+  background-color: #f28c28;
+  color: #ffffff;
+  padding: 0.7em 0;
+  border: none;
+  border-radius: 1em;
+  cursor: pointer;
+}
+
+.search input {
+  font-size: 1em;
+  padding: 0 0.75em;
+  border: none;
+  border-bottom: 2px solid #ffbf00;
+  outline: none;
+}
+
+#result {
+  margin-top: 1.25em;
+}
+
+.card .flag-img {
+  display: block;
+  width: 45%;
+  min-width: 7.5em;
+  margin: 1.8em auto 1.2em auto;
+}
+
+.card h2 {
+  font-weight: 600;
+  color: #000000;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 1.8em;
+}
+
+.card h4 {
+  display: inline;
+  font-weight: 500;
+  color: #333333;
+}
+
+.card span {
+  color: #f28c28;
+}
+
+.card h3 {
+  text-align: center;
+  font-size: 1.2em;
+  font-weight: 400;
+  color: #ff465a;
+}
