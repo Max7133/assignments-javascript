@@ -25,19 +25,19 @@ possibility.
  */
 
 let myArr = [
-  "12-24-2014",
-  "09-2022-23",
-  "12-30-2021",
-  "08-02-2021",
-  "07-15-2018",
-  "2019-12-14",
-  "2022-14-12",
+  '12-24-2014',
+  '09-2022-23',
+  '12-30-2021',
+  '08-02-2021',
+  '07-15-2018',
+  '2019-12-14',
+  '2022-14-12',
 ];
 
 const fixDate = (array) => {
   return array.map((date) => {
-    const fixArr = date.split("-").sort((a, b) => a - b);
-    const finalArr = [fixArr[1], fixArr[0], fixArr[2]].join("-");
+    const fixArr = date.split('-').sort((a, b) => a - b);
+    const finalArr = [fixArr[1], fixArr[0], fixArr[2]].join('-');
     return finalArr;
   });
 };
@@ -71,26 +71,26 @@ console.log(timer); // 11 days - 13 hours - 38 minutes - 20 seconds
 - Write a function to find one country based on the search input
 The data fetched from url should be displayed in index.html.
 */
-const searchBtn = document.getElementById("search-btn");
-const countryInp = document.getElementById("input");
+const searchBtn = document.getElementById('search-btn');
+const countryInp = document.getElementById('input');
 
-const getAllCountries = () => {
-  searchBtn.addEventListener("click", async () => {
-    const res = await fetch("https://restcountries.com/v3.1/all");
-    if (!res.ok) throw new Error("Problem getting country");
-    const data = await res.json();
-    data.forEach((country) => {
-      data.sort(function (a, b) {
-        if (a.name.common < b.name.common) {
-          return -1;
-        }
-        if (a.name.common > b.name.common) {
-          return 1;
-        }
-        return 0;
-      });
-      const div = document.createElement("div");
-      div.innerHTML = `
+const getAllCountries = async () => {
+  //
+  const res = await fetch('https://restcountries.com/v3.1/all');
+  if (!res.ok) throw new Error('Problem getting country');
+  const data = await res.json();
+  data.forEach((country) => {
+    data.sort(function (a, b) {
+      if (a.name.common < b.name.common) {
+        return -1;
+      }
+      if (a.name.common > b.name.common) {
+        return 1;
+      }
+      return 0;
+    });
+    const div = document.createElement('div');
+    div.innerHTML = `
         <img src="${country.flags.png}" class="flag-img">
         <h2>${country.name.common}</h2>
         <div>
@@ -107,13 +107,12 @@ const getAllCountries = () => {
          </div>
          <hr>
         `;
-      result.appendChild(div);
-    });
+    result.appendChild(div);
   });
 };
 
 const getSingleCountry = () => {
-  searchBtn.addEventListener("click", async () => {
+  searchBtn.addEventListener('click', async () => {
     let countryName = countryInp.value;
     const res = await fetch(
       `https://restcountries.com/v3.1/name/${countryName}?fullText=true`
@@ -129,7 +128,7 @@ const getSingleCountry = () => {
         <h2>${data[0].name.common}</h2>
          <div>
             <h4>Capital:</h4>
-            <span>${data[0].capital[0]}</span>
+            <span>${data[0].capital}</span>
          </div>
          <div>
             <h4>Continent:</h4>
@@ -143,21 +142,24 @@ const getSingleCountry = () => {
             <h4>Currency:</h4>
             <span>${
               data[0].currencies[Object.keys(data[0].currencies)].name
-            } - ${Object.keys(data[0].currencies)[0]}</span>
+            } - ${Object.keys(data[0].currencies)
+      .toString()
+      .split(',')
+      .join(', ')}</span>
          </div>
          <div>
             <h4>Languages:</h4>
             <span>${Object.values(data[0].languages)
               .toString()
-              .split(",")
-              .join(", ")}</span>
+              .split(',')
+              .join(', ')}</span>
          </div>
        `;
   });
 };
 
 getSingleCountry();
-//getAllCountries();
+getAllCountries();
 
 /*
 5. Provide logic for function generateNewFolderName, which receive an array as argument. Everytime the function gets called,
@@ -173,7 +175,7 @@ const generateNewFolderName = (existingFolders) => {
     existingFolders = folder.push(`New Folder (${[folder.length]})`);
     return;
   }
-  folder.push("New Folder");
+  folder.push('New Folder');
   // Second way
   /*   existingFolders = folder.push(`New Folder (${[folder.length]})`);
   folder.splice(folder.indexOf[0], 1, "New Folder"); */
@@ -185,3 +187,73 @@ generateNewFolderName(folder);
 generateNewFolderName(folder);
 generateNewFolderName(folder);
 console.log(folder); //expect to see ['New Folder', 'New Folder (1)', 'New Folder (2)', 'New Folder (3)']
+
+/* 
+6. Complete class Book:
+- class Book should have 3 properties: title (read-only, must be a string but cannot be empty), cost (private, must be positive number) and profit (private, positive number > 0 and =< 0.5)
+(error should be thrown if data is not valid)
+- give the logic to get book's cost and profit separately.
+- give the logics to increase and decrease the cost with a certain amount 
+- give the logic to calculate price based on cost and profit. For example: cost 14, profit 0.3 => expected price is 20.
+
+Complete class TaxableBook: 
+- inherit Book, but have 1 more private parameter in the constructor: taxRate. 
+- give the logic to calculate price with taxRate. For example: 
+cost 14, profit 0.3 , tax 24% => expected price is 30.43
+*/
+class Book {
+  #title;
+  #cost;
+  #profit;
+  constructor(title, cost, profit) {
+    if (title || cost <= 0 || (profit > 0 && profit < 0.5)) {
+      this.#profit = profit;
+      this.#title = title;
+      this.#cost = cost;
+    } else {
+      throw new Error('Data is wrong');
+    }
+  }
+  get getTitle() {
+    return this.#title;
+  }
+  get getCost() {
+    return this.#cost;
+  }
+  get getProfit() {
+    return this.#profit;
+  }
+
+  changeCost(amount) {
+    if (this.#cost + amount <= 0) {
+      throw new Error('Price must be greater than 0');
+    } else {
+      this.#cost += amount;
+    }
+  }
+
+  calculatePrice() {
+    return Math.round(this.#cost / (1 - this.#profit));
+  }
+}
+
+class TaxableBook extends Book {
+  /* provide your code here */
+  #taxRate;
+  constructor(title, cost, profit, taxRate) {
+    super(title, cost, profit);
+    if (taxRate <= 0 || taxRate + profit >= 1) {
+      throw new Error('Invalid data');
+    }
+    this.#taxRate = taxRate;
+  }
+  calculatePrice() {
+    return Math.round(this.getCost / (1 - this.getProfit - this.#taxRate));
+  }
+}
+
+const book1 = new Book('The Power of Habits', 14, 0.3);
+const book2 = new TaxableBook('The Power of Habits', 14, 0.3, 0.24);
+
+console.log(book1.calculatePrice()); // 20
+console.log(book2.calculatePrice()); // 30
